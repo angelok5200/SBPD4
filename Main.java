@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 public class Main {
 
-    List<Integer> array = new ArrayList<Integer>();
-    List<Integer> prime = new ArrayList<Integer>();
+    static List<Integer> array = new ArrayList<Integer>();
+    static List<Integer> prime = new ArrayList<Integer>();
 
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        /*Scanner in = new Scanner(System.in);
         System.out.print("Input first number: ");
         int numone = in.nextInt();
         System.out.print("\n" + "Input second number: ");
@@ -21,7 +21,8 @@ public class Main {
         int numthree = in.nextInt();
         in.close();
         mod(numone, numtwo, numthree);
-        powTwo(BigInteger.valueOf(numone));
+        powTwo(BigInteger.valueOf(numone));*/
+        generateKey();
     }
 
     //Katsuraba
@@ -79,23 +80,26 @@ public class Main {
         return k;
     }
 
-    private void plus(BigInteger i){
-
+    private void plus(BigInteger i, BigInteger j){
+            BigInteger k = i.add(j);
     }
 
     private static void powTwo(BigInteger i) {
         multiplication(i, BigInteger.valueOf(2));
     }
 
-    private void generateKey (){
+    private static void generateKey(){
         int x;
         array.add(6);
-        x = (array.get(array.size()) * 5 + 28);
-        mod(x, 1, 63);
+        for (int i=0; i < 100; i++) {
+            x = (array.get(i) * 5 + 28);
+            mod(x, 1, 63);
+            array.add(x);
+        }
         ferma();
     }
 
-    private void ferma (){
+    private static void ferma(){
         int a;
         for (int i = 0; array.size() > i; i++)
         {
@@ -106,4 +110,11 @@ public class Main {
         }
     }
 
+    private void toBinar() {
+        for (int i = 0; prime.size() > i; i++)
+        {
+            Integer.toBinaryString(prime.get(i));
+            prime.add(i);
+        }
+    }
 }
