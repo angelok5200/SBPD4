@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    static List<Integer> array = new ArrayList<Integer>();
-    static List<Integer> prime = new ArrayList<Integer>();
+    static List<BigInteger> array = new ArrayList<BigInteger>();
+    static List<BigInteger> prime = new ArrayList<BigInteger>();
 
 
     public static void main(String[] args) {
@@ -54,28 +54,29 @@ public class Main {
         return Integer.toString(b.length());
     }
 
-    private static int mod(int a, int b, int c) {
+    private static BigInteger mod(BigInteger a, BigInteger b, BigInteger c) {
         int i = 0;
-        int k = 0;
-        List<Integer> arr = new ArrayList<Integer>();
-        while (b > 0){
-            while ((int) Math.pow(2, i) <= b){
+        BigInteger k;
+        k = BigInteger.valueOf(1);
+        List<BigInteger> arr = new ArrayList<>();
+        while (b.compareTo(BigInteger.valueOf(0)) > 0){
+            while (BigInteger.valueOf((long) Math.pow(2, i)).compareTo(b) > 0){
                 i++;
             }
             i--;
-            b = b - (int) Math.pow(2, i);
+            b = b.subtract( BigInteger.valueOf((long) Math.pow(2, i)));
             while (i != 0){
-                k = (int) Math.pow(a, 2) % c;
+                k = a.pow(2).mod(c);
                 i--;
             }
             arr.add(k);
         }
-        k = 1;
+        k = BigInteger.valueOf(1);
         while (arr.size() > 0){
-            k = k * arr.get(arr.size());
+            k = k.multiply(arr.get(arr.size()));
             arr.remove(arr.size());
         }
-        k = k % c;
+        k = k.mod(c);
         System.out.print(k);
         return k;
     }
@@ -89,11 +90,11 @@ public class Main {
     }
 
     private static void generateKey(){
-        int x;
-        array.add(6);
+        BigInteger x;
+        array.add(BigInteger.valueOf(1145236989 * 523697));
         for (int i=0; i < 100; i++) {
-            x = (array.get(i) * 5 + 28);
-            mod(x, 1, 63);
+            x = (array.get(i).multiply(BigInteger.valueOf(2)).add(BigInteger.valueOf(3)));
+            mod(x, BigInteger.valueOf(1), BigInteger.valueOf(63));
             array.add(x);
         }
         ferma();
@@ -103,8 +104,8 @@ public class Main {
         int a;
         for (int i = 0; array.size() > i; i++)
         {
-            a = (int) (Math.random() * ((126 - 114) + 1)) + 114;
-            if (((Math.pow(a, array.get(i)) - array.get(i)) % a) == 0) {
+            a = (int) (Math.random() * ((126 - 114) + 1)) + 114; //72057594037927936
+            if ((BigInteger.valueOf(a).pow(array.get(i).intValue()).subtract(array.get(i)).mod(BigInteger.valueOf(a)).intValue()) == 0) {
                 prime.add(array.get(i));
             }
         }
@@ -113,8 +114,8 @@ public class Main {
     private void toBinar() {
         for (int i = 0; prime.size() > i; i++)
         {
-            Integer.toBinaryString(prime.get(i));
-            prime.add(i);
+            prime.get(i).toString(2);
+            prime.add(BigInteger.valueOf(i));
         }
     }
 }
